@@ -1,9 +1,7 @@
-// Функція збереження
 function saveToStorage() {
   localStorage.setItem("garage", JSON.stringify(cars));
 }
 
-// Завантаження машин або ініціалізація
 let cars = JSON.parse(localStorage.getItem("garage"));
 if (!cars || cars.length === 0) {
   cars = [
@@ -32,29 +30,24 @@ if (!cars || cars.length === 0) {
       inGarage: true,
     },
   ];
-  saveToStorage(); // Записуємо у localStorage одразу
+  saveToStorage();
 }
 
-// DOM
 const carTableBody = document.querySelector("#car-table tbody");
 const carForm = document.getElementById("car-form");
 const searchInput = document.getElementById("search");
 const sortSelect = document.getElementById("sort-select");
 const filterSelect = document.getElementById("filter-select");
 
-// Встановимо фільтр за замовчуванням у "all"
 filterSelect.value = "all";
 
-// Фільтруємо машини
 function filterCars(carsArray) {
   let filtered = [...carsArray];
 
-  // Фільтр по гаражу
   const filterVal = filterSelect.value;
   if (filterVal === "in") filtered = filtered.filter((c) => c.inGarage);
   else if (filterVal === "out") filtered = filtered.filter((c) => !c.inGarage);
 
-  // Пошук
   const searchVal = searchInput.value.trim().toLowerCase();
   if (searchVal) {
     filtered = filtered.filter(
@@ -64,7 +57,6 @@ function filterCars(carsArray) {
     );
   }
 
-  // Сортування
   const sortVal = sortSelect.value;
   if (sortVal === "price-asc") filtered.sort((a, b) => a.price - b.price);
   else if (sortVal === "year-desc") filtered.sort((a, b) => b.year - a.year);
@@ -74,7 +66,6 @@ function filterCars(carsArray) {
   return filtered;
 }
 
-// Рендер таблиці
 function renderCars() {
   carTableBody.innerHTML = "";
   const visibleCars = filterCars(cars);
@@ -106,7 +97,6 @@ function renderCars() {
     carTableBody.appendChild(tr);
   });
 
-  // Події для чекбоксів "В гаражі"
   document.querySelectorAll(".toggle-garage").forEach((cb) => {
     cb.addEventListener("change", (e) => {
       const i = parseInt(e.target.dataset.index);
@@ -120,7 +110,6 @@ function renderCars() {
     });
   });
 
-  // Події для видалення авто
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const i = parseInt(e.target.dataset.index);
@@ -135,7 +124,6 @@ function renderCars() {
     });
   });
 
-  // Інлайн редагування пробігу
   document.querySelectorAll(".mileage-editable").forEach((span) => {
     span.addEventListener("click", (e) => {
       const td = e.target.parentElement;
@@ -172,7 +160,6 @@ function renderCars() {
   });
 }
 
-// Додавання нового авто
 carForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const newCar = {
@@ -189,10 +176,8 @@ carForm.addEventListener("submit", (e) => {
   carForm.reset();
 });
 
-// Події фільтрів та пошуку
 searchInput.addEventListener("input", renderCars);
 sortSelect.addEventListener("change", renderCars);
 filterSelect.addEventListener("change", renderCars);
 
-// Перший рендер
 renderCars();
