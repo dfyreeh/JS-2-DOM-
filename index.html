@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Мій Гараж 🚗</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Мій Гараж</h1>
+
+    <form id="car-form" class="car-form">
+      <input type="text" id="name" placeholder="Марка (напр: BMW)" required />
+      <input type="text" id="model" placeholder="Модель (напр: X5)" required />
+      <input type="number" id="year" placeholder="Рік" required min="1900" max="2100" />
+      <input type="number" id="price" placeholder="Ціна ($)" required min="0" />
+      <input type="number" id="mileage" placeholder="Пробіг (км)" required min="0" />
+      <label><input type="checkbox" id="inGarage" checked /> В гаражі</label>
+      <button type="submit" class="btn">Додати авто</button>
+    </form>
+
+    <div class="controls">
+      <input type="text" id="search" placeholder="Пошук за маркою чи моделлю..." />
+      <select id="sort-select" title="Сортування">
+        <option value="">Сортувати...</option>
+        <option value="price-asc">Ціна: від дешевших до дорожчих</option>
+        <option value="year-desc">Рік: від новіших до старіших</option>
+        <option value="mileage-asc">Пробіг: від меншого до більшого</option>
+      </select>
+      <select id="filter-select" title="Фільтр по гаражу">
+        <option value="all">Всі авто</option>
+        <option value="in">В гаражі</option>
+        <option value="out">Не в гаражі</option>
+      </select>
+    </div>
+
+    <table id="car-table" aria-label="Таблиця автомобілів">
+      <thead>
+        <tr>
+          <th>Марка</th>
+          <th>Модель</th>
+          <th>Рік</th>
+          <th>Ціна ($)</th>
+          <th>Пробіг (км)</th>
+          <th>В гаражі</th>
+          <th>Дії</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
